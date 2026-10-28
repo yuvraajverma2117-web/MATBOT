@@ -82,7 +82,9 @@ app.command("/matbot-help", async ({ ack, respond }) => {
 /matbot-random - Get a random motivational sentence
 /matbot-ideas - Get a random idea
 /matbot-ascii - Get a random ASCII art
-/matbot-facts - Get a random useless fact`
+/matbot-facts - Get a random useless fact
+/matbot-curse-Get a random friendly curse sentence
+/matbot-doom-Get the decay check`
   });
 });
 
@@ -197,5 +199,38 @@ app.command("/matbot-facts", async ({ command, ack, respond }) => {
     await respond({ text: ` *Useless Fact:* ${response.data.text}` });
   } catch (err) {
     await respond({ text: "Failed to fetch a fact." });
+  }
+});
+
+app.command("/matbot-curse", async ({ command, ack, respond }) => {
+  await ack();
+  const curses = [
+    "bruh, not gonna curse watching ur current situation",
+    "let ur videos buffer every 5 second for 5 seconds",
+    "dont larp",
+    "i will haunt your monitor and make it flicker violently until your eyes melt from annoyance",
+    "let your node modules folder be corrupted so bad that even a clean npm install cant save your soul",
+  ];
+  const randomCurse = curses[Math.floor(Math.random() * curses.length)];
+
+  await respond({
+    text: `geez look what you did\n\n"${randomCurse}"`
+  });
+});
+
+app.command("/matbot-doom", async ({ command, ack, respond }) => {
+  const start = Date.now();
+  await ack();
+  const latency = Date.now() - start;
+  
+  try {
+    const doomFactor = math.evaluate(`${latency} * 6.66`);
+        await respond({
+      text: `system alert or whatever\n\n` +
+            `current server rot level is sitting at ${doomFactor} percent\n` +
+            `the memory leak is getting aggressive and your container will probably implode in like twenty minutes`
+    });
+  } catch (err) {
+  await respond({ text: "even the doom clock crashed fix your bot" });
   }
 });
